@@ -1,0 +1,57 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package model;
+
+import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+
+import javax.swing.JPanel;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class Line extends AbstractTool {
+    
+    /**
+     *Stores the path created by this tool.
+     */
+    private Line2D myLine;
+    
+    /**
+     *Constructs the line tool.
+     *@param thePanel The panel this tool will draw on.
+     */
+    public Line(final JPanel thePanel) {
+        super(thePanel);
+    }
+
+    @Override 
+    public void mousePressed(final MouseEvent theEvent) {
+        myLine = new Line2D.Double(theEvent.getPoint(), theEvent.getPoint());
+        //myLine.moveTo(theEvent.getX(), theEvent.getY());
+        myPanel.setShape(myLine);
+    }
+    
+    @Override
+    public void mouseDragged(final MouseEvent theEvent) {
+        myLine.setLine(myLine.getX1(), myLine.getY1(), theEvent.getX(), theEvent.getY());
+        //myPath.moveTo(theEvent.getX(), theEvent.getY());
+        myPanel.setShape(myLine);
+        //myPanel.repaint();
+    }
+    
+    @Override
+    public void mouseReleased(final MouseEvent theEvent) {
+        myLine.setLine(myLine.getX1(), myLine.getY1(), theEvent.getX(), theEvent.getY());
+//        myLine.lineTo(theEvent.getX(), theEvent.getY());
+//        myLine.moveTo(theEvent.getX(), theEvent.getY());
+//        myLine.closePath();
+        myPanel.setShape(myLine);
+    }
+}

@@ -1,0 +1,25 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package model;
+
+import javax.swing.JPanel;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class Ellipse extends AbstractTool {
+
+    /**
+     *
+     *
+     *@param thePanel The panel this tool will draw on.
+     */
+    public Ellipse(final JPanel thePanel) {
+        super(thePanel);
+    }
+}

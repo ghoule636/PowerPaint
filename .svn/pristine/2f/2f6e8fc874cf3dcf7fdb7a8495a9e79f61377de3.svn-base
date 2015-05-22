@@ -1,0 +1,67 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package model;
+
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+
+import javax.swing.JPanel;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class Rectangle extends AbstractTool {
+    
+    private Rectangle2D myRectangle;
+
+    /**
+     *
+     *
+     *@param thePanel The panel this tool will draw on.
+     */
+    public Rectangle(final JPanel thePanel) {
+        super(thePanel);
+    }
+    
+    @Override 
+    public void mousePressed(final MouseEvent theEvent) {
+        myRectangle = new Rectangle2D.Double(theEvent.getX(), theEvent.getY(),
+                                             theEvent.getX() - theEvent.getX(),
+                                             theEvent.getY() - theEvent.getY());
+
+        myPanel.addShape(myRectangle);
+    }
+    
+    @Override
+    public void mouseDragged(final MouseEvent theEvent) {
+        myRectangle.setFrameFromDiagonal(new Point2D.Double(myRectangle.getX(), myRectangle.getY()), theEvent.getPoint());
+//        if (theEvent.getX() < myRectangle.getX()) {
+//            myRectangle.setFrame(myRectangle.getX(), myRectangle.getY(),
+//                                 theEvent.getX() - myRectangle.getX(),
+//                                 theEvent.getY() - myRectangle.getY());
+//            
+//        } else {
+//            myRectangle.setFrame(myRectangle.getX(), myRectangle.getY(),
+//                                 theEvent.getX() - myRectangle.getX(),
+//                                 theEvent.getY() - myRectangle.getY());
+//        }
+        
+
+        myPanel.addShape(myRectangle);
+
+    }
+    
+    @Override
+    public void mouseReleased(final MouseEvent theEvent) {
+        myRectangle.setFrame(myRectangle.getX(), myRectangle.getY(),
+                             theEvent.getX() - myRectangle.getX(),
+                             theEvent.getY() - myRectangle.getY());
+        myPanel.addShape(myRectangle);
+    }
+}

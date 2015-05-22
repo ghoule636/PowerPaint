@@ -1,0 +1,40 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class PowerPaintFrame extends JFrame {
+
+	/**
+	 *Stores the serial number for this frame.
+	 */
+	private static final long serialVersionUID = -8233353449731603035L;
+
+	/**
+	 * Create the frame.
+	 */
+	public PowerPaintFrame() {
+		super("PowerPaint");
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		add(new PaintDrawPanel(), BorderLayout.CENTER);
+		
+		pack();
+		
+		setVisible(true);
+
+	}
+
+}

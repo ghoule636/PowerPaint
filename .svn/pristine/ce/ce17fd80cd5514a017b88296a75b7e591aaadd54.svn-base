@@ -1,0 +1,126 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Path2D;
+
+import javax.swing.JPanel;
+
+import model.Pencil;
+import model.Tool;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class PaintDrawPanel extends JPanel {
+    
+    /**
+     *The background color of the panel.
+     */
+    public static final Color BACKGROUND_COLOR = Color.WHITE;
+
+    /**
+     *Stores the preferred width of the panel.
+     */
+    private static final int WIDTH = 400;
+
+    /**
+     *Stores the preferred height of the panel.
+     */
+    private static final int HEIGHT = 200;
+    
+    /**
+     *This represents the current tool being used to paint on the panel.
+     */
+    private Tool myCurrentTool;
+    
+    /**
+     *Stores the current color being used.
+     */
+    private Color myColor;
+
+    /**
+     *Stores the current width used to draw.
+     */
+    private int myWidth;
+    
+    /**
+     *The path being created.
+     */
+    public Path2D myPath;
+    
+    /**
+     *Create the panel.
+     */
+    public PaintDrawPanel() {
+
+        super();
+        myCurrentTool = new Pencil(this);
+        myColor = Color.BLACK;
+        myPath = new Path2D.Double();
+        myWidth = 1;
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(BACKGROUND_COLOR);
+        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        addMouseListener(myCurrentTool);
+    }
+    
+    /**
+     * Paints the current path.
+     * 
+     * @param theGraphics The graphics context to use for painting.
+     */
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setPaint(myColor);
+        g2d.setStroke(new BasicStroke(myWidth));
+        g2d.draw(myPath);
+    }
+    
+    /**
+     *This method will set the current tool.
+     *
+     *@param theTool the newly selected tool.
+     */
+    public void setTool(final Tool theTool) {
+        removeMouseListener(myCurrentTool);
+        myCurrentTool = theTool;
+        addMouseListener(myCurrentTool);
+        
+    }
+    
+    /**
+     *This method will allow the user to set the color used to paint on this panel.
+     *
+     *@param theColor This is the new color used.
+     */
+    public void setColor(final Color theColor) {
+        myColor = theColor;
+    }
+    
+    /**
+     *Allows the tool objects to change the current path drawn.
+     *
+     *@param thePath The new path created.
+     */
+    public void setPath(final Path2D thePath) {
+        myPath = thePath;
+    }
+}

@@ -1,0 +1,119 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+/**
+*
+*@author Gabriel Houle
+*@version 5/20/15
+*/
+public class PowerPaintMenuBar extends JMenuBar {
+
+    /**
+     *Stores the File sub-menu.
+     */
+    private JMenu myFileMenu;
+    
+    /**
+     *Stores the options sub-menu.
+     */
+    private JMenu myOptionsMenu;
+    
+    /**
+     *Stores the tools sub-menu.
+     */
+    private final JMenu myToolsMenu;
+    
+    /**
+     *Stores the Help sub-menu.
+     */
+    private final JMenu myHelpMenu;
+    
+    /**
+     *Stores the button group for the tool buttons.
+     */
+    private final ButtonGroup myButtonGroup;
+    
+    /**
+     *This method will construct a JMenuBar.
+     * 
+     *@param theFrame Stores the frame this menu will be added to.
+     */
+    public PowerPaintMenuBar(final JFrame theFrame) {
+        super();
+        
+        setupFileMenu(theFrame);
+        setupOptionsMenu();
+        myToolsMenu = new JMenu("Tools");
+        myHelpMenu = new JMenu("Help");
+        myButtonGroup = new ButtonGroup();
+        
+        setup();
+    }
+    
+    /**
+     *This method will add the created tool bar to the given frame.
+     */
+    private void setup() {
+        
+        add(myFileMenu);
+        add(myOptionsMenu);
+        add(myToolsMenu);
+        add(myHelpMenu);
+        
+    }
+    
+    /**
+     *This method will create the various buttons found in the file sub-menu.
+     *
+     *@param theFrame is the frame this menu will be added to.
+     */
+    private void setupFileMenu(final JFrame theFrame) {
+        myFileMenu = new JMenu("File");
+        final JMenuItem undoAllButton = new JMenuItem("Undo all changes");
+        final JMenuItem quitButton = new JMenuItem("Exit");
+        
+        myFileMenu.setMnemonic(KeyEvent.VK_F);
+        undoAllButton.setMnemonic(KeyEvent.VK_U);
+        quitButton.setMnemonic(KeyEvent.VK_X);
+        quitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(final ActionEvent theEvent) {
+                    theFrame.dispatchEvent(new WindowEvent(theFrame,
+                                                       WindowEvent.WINDOW_CLOSING));
+                }
+            });
+        myFileMenu.add(undoAllButton);
+        myFileMenu.addSeparator();
+        myFileMenu.add(quitButton);
+    }
+    
+    /**
+     *This helper method sets up the options sub-menu.
+     */
+    private void setupOptionsMenu() {
+        myOptionsMenu = new JMenu("Options");
+        final JMenuItem gridButton = new JCheckBoxMenuItem("Grid");
+        
+        myOptionsMenu.setMnemonic(KeyEvent.VK_O);
+        gridButton.setMnemonic(KeyEvent.VK_G);
+        
+        myOptionsMenu.add(gridButton);
+        myOptionsMenu.addSeparator();
+        
+    }
+}

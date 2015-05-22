@@ -1,0 +1,56 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package model;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
+
+import view.PaintDrawPanel;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public abstract class AbstractTool extends MouseInputAdapter implements Tool  {
+    
+    /**
+     *Stores the panel this tool draws on.
+     */
+    protected PaintDrawPanel myPanel;
+    
+    /**
+     *This method will construct a new tool object.
+     *
+     *@param thePanel The panel this tool will draw on.
+     */
+    protected AbstractTool(final JPanel thePanel) {
+        super();
+        myPanel = (PaintDrawPanel) thePanel;
+    }
+    
+    /**
+     *This method will set the current color used.
+     *
+     *@param theColor The new color.
+     */
+    
+    public void setColor(final Color theColor) {
+        boolean blah = false;
+        blah = true;
+    }
+    
+    /**
+     *Returns the name of this drawing tool.
+     *
+     *@return Name of the class.
+     */
+    public String getName() {
+        return getClass().getSimpleName();
+    }
+}

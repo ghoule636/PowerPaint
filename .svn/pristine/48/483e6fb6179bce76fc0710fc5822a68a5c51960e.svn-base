@@ -1,0 +1,202 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+
+import javax.swing.Action;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+
+/**
+*
+*@author Gabriel Houle
+*@version 5/20/15
+*/
+public class PowerPaintMenuBar extends JMenuBar {
+    
+    /**
+     *The minor tick spacing for the thickness slider bar.
+     */
+    private static final int MINOR_TICK_SPACING = 1;
+    
+    /**
+     *The major tick spacing for the thickness slider bar.
+     */
+    private static final int MAJOR_TICK_SPACING = 5;
+    
+    /**
+     *The maximum thickness that can be applied to the drawing tool.
+     */
+    private static final int MAX_THICKNESS = 20;
+
+    /**
+     *Stores the File sub-menu.
+     */
+    private final JMenu myFileMenu;
+    
+    /**
+     *Stores the options sub-menu.
+     */
+    private final JMenu myOptionsMenu;
+    
+    /**
+     *Stores the tools sub-menu.
+     */
+    private final JMenu myToolsMenu;
+    
+    /**
+     *Stores the Help sub-menu.
+     */
+    private JMenu myHelpMenu;
+    
+    /**
+     *Stores the button group for the tool buttons.
+     */
+    private final ButtonGroup myButtonGroup;
+    
+    /**
+     *This method will construct a JMenuBar.
+     * 
+     *@param theFrame Stores the frame this menu will be added to.
+     *@param thePanel stores the drawing panel that this toolbar can affect.
+     */
+    public PowerPaintMenuBar(final JFrame theFrame, final JPanel thePanel) {
+        super();
+        
+        myFileMenu = new JMenu("File");
+        setupFileMenu(theFrame, thePanel);
+        myOptionsMenu = new JMenu("Options");
+        setupOptionsMenu();
+        myToolsMenu = new JMenu("Tools");
+        myToolsMenu.setMnemonic(KeyEvent.VK_T);
+        setupHelpMenu();
+        myButtonGroup = new ButtonGroup();
+        
+        setup();
+    }
+    
+    /**
+     *This method will add the created tool bar to the given frame.
+     */
+    private void setup() {
+        
+        add(myFileMenu);
+        add(myOptionsMenu);
+        add(myToolsMenu);
+        add(myHelpMenu);
+        
+    }
+    
+    /**
+     *This method will create the various buttons found in the file sub-menu.
+     *
+     *@param theFrame is the frame this menu will be added to.
+     *@param thePanel is the panel this menu can affect.
+     */
+    private void setupFileMenu(final JFrame theFrame, final JPanel thePanel) {
+        final JMenuItem undoAllButton = new JMenuItem("Undo all changes");
+        final JMenuItem quitButton = new JMenuItem("Exit");
+        
+        myFileMenu.setMnemonic(KeyEvent.VK_F);
+        undoAllButton.setMnemonic(KeyEvent.VK_U);
+        quitButton.setMnemonic(KeyEvent.VK_X);
+        quitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent theEvent) {
+                    theFrame.dispatchEvent(new WindowEvent(theFrame,
+                                                       WindowEvent.WINDOW_CLOSING));
+                }
+            });
+        undoAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                ((PaintDrawPanel) thePanel).undoAll();
+            }
+        });
+        
+        undoAllButton.setEnabled(false);
+        
+        myFileMenu.add(undoAllButton);
+        myFileMenu.addSeparator();
+        myFileMenu.add(quitButton);
+    }
+    
+    /**
+     *This helper method sets up the options sub-menu.
+     */
+    private void setupOptionsMenu() {
+        
+        final JMenuItem gridButton = new JCheckBoxMenuItem("Grid");
+        final JSlider thicknessSlider = new JSlider(SwingConstants.HORIZONTAL,
+                                                    0, MAX_THICKNESS, 1);
+        final JMenu thicknessMenu = new JMenu("Thickness");
+        final JMenuItem colorButton = new JMenuItem("Color...");
+        
+        thicknessSlider.setMajorTickSpacing(MAJOR_TICK_SPACING);
+        thicknessSlider.setMinorTickSpacing(MINOR_TICK_SPACING);
+        thicknessSlider.setPaintLabels(true);
+        thicknessSlider.setPaintTicks(true);
+        
+        thicknessMenu.add(thicknessSlider);
+        
+        myOptionsMenu.setMnemonic(KeyEvent.VK_O);
+        gridButton.setMnemonic(KeyEvent.VK_G);
+        thicknessMenu.setMnemonic(KeyEvent.VK_T);
+        colorButton.setMnemonic(KeyEvent.VK_C);
+        
+        myOptionsMenu.add(gridButton);
+        myOptionsMenu.addSeparator();
+        myOptionsMenu.add(thicknessMenu);
+        myOptionsMenu.addSeparator();
+        myOptionsMenu.add(colorButton);
+        
+        
+    }
+    
+    /**
+     *This method will allow the frame to add tool actions to the menu.
+     *This class will allow you to select if this button is selected by default.
+     * 
+     *@param theToolAction This action will be added to this button.
+     */
+    public void createToolButtons(final Action theToolAction) {
+        
+        final JMenuItem newToolButton = new JRadioButtonMenuItem(theToolAction);
+        newToolButton.setMnemonic(theToolAction.toString().charAt(0));
+        
+        myToolsMenu.add(newToolButton);
+        myButtonGroup.add(newToolButton);
+        
+        
+        
+        
+    }
+    
+    /**
+     *This method sets up the help sub-menu.
+     */
+    private void setupHelpMenu() {
+        myHelpMenu = new JMenu("Help");
+        final JMenuItem aboutButton = new JMenuItem("About...");
+        
+        myHelpMenu.setMnemonic(KeyEvent.VK_H);
+        aboutButton.setMnemonic(KeyEvent.VK_A);
+        
+        myHelpMenu.add(aboutButton);
+    }
+}

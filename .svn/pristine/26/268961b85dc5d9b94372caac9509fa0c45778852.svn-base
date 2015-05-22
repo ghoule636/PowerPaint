@@ -1,0 +1,38 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package model;
+
+import java.awt.Color;
+
+import javax.swing.event.MouseInputListener;
+
+/**
+ *This interface will define a drawing tool that will have a color and different ways of
+ *drawing.
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public interface Tool extends MouseInputListener {
+
+    /**
+     *This method will set the current color used.
+     *
+     *@param theColor The new color.
+     *
+    void setColor(Color theColor);*/
+    
+    /**
+     *Returns the name of this tool instance.
+     *
+     *@return The name of the tool.
+     */
+    String getName();
+    
+    //some other stuff.
+    
+    
+}

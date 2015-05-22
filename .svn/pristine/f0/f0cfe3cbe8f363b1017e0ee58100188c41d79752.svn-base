@@ -1,0 +1,15 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package model;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public interface Tool {
+
+}

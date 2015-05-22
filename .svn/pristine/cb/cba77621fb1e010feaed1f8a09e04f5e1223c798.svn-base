@@ -1,0 +1,46 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class PaintDrawPanel extends JPanel {
+    
+    /**
+     *The background color of the panel.
+     */
+    public static final Color BACKGROUND_COLOR = Color.WHITE;
+
+    /**
+     *Stores the preferred width of the panel.
+     */
+    private static final int WIDTH = 400;
+
+    /**
+     *Stores the preferred height of the panel.
+     */
+    private static final int HEIGHT = 200;
+
+    /**
+     *Create the panel.
+     */
+    public PaintDrawPanel() {
+
+        super();
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(BACKGROUND_COLOR);
+        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+    }
+}

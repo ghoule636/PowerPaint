@@ -1,0 +1,141 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JPanel;
+
+import model.Pencil;
+import model.Tool;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public class PaintDrawPanel extends JPanel {
+    
+    /**
+     *The background color of the panel.
+     */
+    public static final Color BACKGROUND_COLOR = Color.WHITE;
+
+    /**
+     *Stores the preferred width of the panel.
+     */
+    private static final int WIDTH = 400;
+
+    /**
+     *Stores the preferred height of the panel.
+     */
+    private static final int HEIGHT = 200;
+    
+    /**
+     *This represents the current tool being used to paint on the panel.
+     */
+    private Tool myCurrentTool;
+    
+    /**
+     *Stores the current color being used.
+     */
+    private Color myColor;
+
+    /**
+     *Stores the current width used to draw.
+     */
+    private final int myWidth;
+    
+    /**
+     *Stores all the shapes that are created by the user.
+     */
+    private final List<Shape> myShapeArray;
+    
+    /**
+     *Create the panel.
+     */
+    public PaintDrawPanel() {
+
+        super();
+        setTool(new Pencil(this));
+        myColor = Color.BLACK;
+        myWidth = 1;
+        myShapeArray = new ArrayList<Shape>();
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(BACKGROUND_COLOR);
+        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+    }
+    
+    /**
+     * Paints the current path.
+     * 
+     * @param theGraphics The graphics context to use for painting.
+     */
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        g2d.setPaint(myColor);
+        g2d.setStroke(new BasicStroke(myWidth));
+        for (final Shape shape : myShapeArray) {
+            g2d.draw(shape);
+        }
+        
+    }
+    
+    /**
+     *This method will set the current tool.
+     *
+     *@param theTool the newly selected tool.
+     */
+    public void setTool(final Tool theTool) {
+        removeMouseListener(myCurrentTool);
+        removeMouseMotionListener(myCurrentTool);
+        myCurrentTool = theTool;
+        addMouseListener(myCurrentTool);
+        addMouseMotionListener(myCurrentTool);
+        
+    }
+    
+    /**
+     *This method will allow the user to set the color used to paint on this panel.
+     *
+     *@param theColor This is the new color used.
+     */
+    public void setColor(final Color theColor) {
+        myColor = theColor;
+    }
+    
+    /**
+     *Allows the tool objects to change the current path drawn.
+     *
+     *@param theShape The new shape created.
+     */
+    public void addShape(final Shape theShape) {
+        
+        myShapeArray.add(theShape);
+        repaint();
+    }
+    
+    /**
+     *This method will allow the undo all button to clear everything off the drawing panel.
+     */
+    public void undoAll() {
+        myShapeArray.clear();
+        repaint();
+    }
+}

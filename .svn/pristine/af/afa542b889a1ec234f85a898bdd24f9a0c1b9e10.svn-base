@@ -1,0 +1,38 @@
+/*
+ *TCSS 305 - Spring 2015
+ *Assignment 5 - PowerPaint
+ */
+
+package view;
+
+import java.awt.EventQueue;
+
+/**
+ *
+ *@author Gabriel Houle
+ *@version 5/20/15
+ */
+public final class PowerPaintMain {
+
+
+    /**
+     * Private constructor to prevent construction of instances.
+     */
+    private PowerPaintMain() {
+            //Do nothing
+    }
+
+    /**
+     * Constructs the main GUI window frame.
+     * 
+     * @param theArgs Command line arguments (ignored).
+     */
+    public static void main(final String... theArgs) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new PowerPaintGUI();     
+            }
+        });
+    }
+}
